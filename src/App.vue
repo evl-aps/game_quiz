@@ -1,30 +1,38 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+	<h1>QUIZ</h1>
+
+	<StartGame v-if="!$store.getters.getStartGame"/>
+	<QuestionGame v-else />
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import StartGame from './components/StartGame.vue'
+import QuestionGame from './components/QuestionGame.vue'
+
+export default {
+	components: { StartGame, QuestionGame },
+
+	data() {
+		return {
+		}
+	},
+}
+</script>
+
+<style lang="scss">
+* {
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0; 
+	padding: 0;
+	color: #DEE4EA;
 }
 
-nav {
-  padding: 30px;
+body {
+	background: #161A1D;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+h1 {
+	text-align: center;
+	margin: 20px 0;
 }
 </style>
