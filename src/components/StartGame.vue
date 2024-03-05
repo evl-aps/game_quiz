@@ -1,14 +1,18 @@
 <template>
 	<div class="nameInput">
 		<label for="name">Имя участника</label>
-		<input type="text" id="name" v-model="computedName" @keypress.enter="$store.commit('updateStartGame', true)">
+		<input type="text" id="name" v-model="computedName" @keypress.enter="startGame">
 
-		<button class="greenBtn" @click="$store.commit('updateStartGame', true)">START</button>
+		<button class="greenBtn" @click="startGame">START</button>
 	</div>
 </template>
 
 <script>
 export default {
+	props: {
+		startGame: Function,
+	},
+
 	computed: {
 		computedName: {
 			get() {
@@ -28,7 +32,7 @@ export default {
 	width: 300px;
 	margin: 0 auto;
 	border: 1px solid #DEE4EA;
-	border-radius: 10px;
+	border-radius: 5px;
 	padding: 30px;
 	box-sizing: border-box;
 
@@ -46,7 +50,7 @@ export default {
 		padding: 10px;
 		border: none;
 		outline: none;
-		border-radius: 10px;
+		border-radius: 5px;
 		box-sizing: border-box;
 	}
 }

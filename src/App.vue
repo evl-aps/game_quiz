@@ -1,96 +1,87 @@
 <template>
 	<h1>QUIZ</h1>
 
-	<StartGame v-if="!$store.getters.getStartGame"/>
+	<StartGame v-if="!$store.getters.getStartGame" :startGame="startGame"/>
 	<QuestionGame
 		:index="index"
-		:questions="questions"
+		:clickToAnswer="clickToAnswer"
 		:nextQuestion="nextQuestion" 
 		v-else-if="$store.getters.getStartGame && !$store.getters.getFinishGame"
 	/>
 
-	<ResultGame v-else :questions="questions"/>
+	<ResultGame v-else />
+
+	<AlertApp v-if="errors.length" :errors="errors"  @click="errors = []"/>
 </template>
 
 <script>
 import StartGame from './components/StartGame.vue'
 import QuestionGame from './components/QuestionGame.vue'
 import ResultGame from './components/ResultGame.vue'
+import AlertApp from './components/AlertApp.vue'
 
 export default {
-	components: { StartGame, QuestionGame, ResultGame },
+	components: { StartGame, QuestionGame, ResultGame, AlertApp },
 
 	data() {
 		return {
+			errors: [],
 			index: 0,
-			questions: [
-				{
-					question: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-								Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
-					answers: [
-						{
-							id: 1,
-							text: 'Вариант 1',
-							value: 1,
-						},
-						{
-							id: 2,
-							text: 'Вариант 2',
-							value: 2,
-						},
-						{
-							id: 3,
-							text: 'Вариант 3',
-							value: 3,
-						},
-						{
-							id: 4,
-							text: 'Вариант 4',
-							value: 4,
-						}
-					],
-					correctAnswer: 1,
-					userAnswer: null
-				},
-				{
-					question: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua???`,
-					answers: [
-						{
-							id: 1,
-							text: 'Вариант 14',
-							value: 1,
-						},
-						{
-							id: 2,
-							text: 'Вариант 21',
-							value: 2,
-						},
-						{
-							id: 3,
-							text: 'Вариант 32',
-							value: 3,
-						},
-						{
-							id: 4,
-							text: 'Вариант 43',
-							value: 4,
-						}
-					],
-					correctAnswer: 3,
-					userAnswer: null
-				},
-			]
 		}
 	},
 
 	methods: {
+		startGame() {
+			if(!this.$store.getters.getPlayerName) {
+				this.updateErrors('Введите ваше имя!')
+				return
+			}
+			this.errors = []
+			this.$store.commit('updateStartGame', true)
+		},
+
+		clickToAnswer(answer, index) {
+			this.$store.getters.getQuestions.forEach( question => {
+				question.answers.forEach( el => {
+					if(el.id == this.parseProxy(answer).id) {
+						el.choisen = true
+						this.$store.getters.getQuestions[index].userAnswer = el.value
+					} else {
+						el.choisen = false
+					}
+				})
+			})
+		},
+
 		nextQuestion() {
-			if(this.index + 1 != this.questions.length) {
+			if(!this.$store.getters.getQuestions[this.index].userAnswer) {
+				this.updateErrors('Необходимо выбрать ответ!')
+				return
+			}
+			this.errors = []
+			this.updateAnswersToFalse();
+			if(this.index + 1 != this.$store.getters.getQuestions.length) {
 				this.index++
 			} else {
 				this.$store.commit('updateFinishGame', true)
 			}
-		}
+		},
+
+		parseProxy(value) {
+			return JSON.parse(JSON.stringify(value))
+		},
+
+		updateAnswersToFalse() {
+			this.$store.getters.getQuestions.forEach( question => {
+				question.answers.forEach( el => {
+					el.choisen = false
+				})
+			})
+		},
+
+		updateErrors(err) {
+			this.errors = [ ...this.errors, err ]
+		},
 	}
 }
 </script>
@@ -125,7 +116,7 @@ h2 {
 	display: block;
 	background: #1F845A;
 	border: none;
-	border-radius: 10px;
+	border-radius: 5px;
 	cursor: pointer;
 	transition: all .25s ease;
 

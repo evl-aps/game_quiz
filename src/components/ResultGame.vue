@@ -2,7 +2,7 @@
 	<h2>Ваши результаты, {{ $store.getters.getPlayerName }}</h2>
 
 	<div class="resultPlace">
-		10/{{ questions.length }}
+		10/{{ $store.getters.getQuestions.length }}
 	</div>
 
 	<button class="greenBtn" @click="reloadPage">Repeat</button>
@@ -10,13 +10,11 @@
 
 <script>
 export default {
-	props: {
-		questions: Array,
-	},
-
 	methods: {
 		reloadPage() {
-			location.reload()
+			this.$store.commit('updatePlayerName', '')
+			this.$store.commit('updateStartGame', false)
+			this.$store.commit('updateFinishGame', false)
 		}
 	}
 }
@@ -28,6 +26,6 @@ export default {
 	width: 70%;
 	margin: 20px auto;
 	border: 1px solid #DEE4EA;
-	border-radius: 10px;
+	border-radius: 5px;
 }
 </style>
