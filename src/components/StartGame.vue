@@ -3,7 +3,7 @@
 		<label for="name">Имя участника</label>
 		<input type="text" id="name" v-model="computedName" @keypress.enter="$store.commit('updateStartGame', true)">
 
-		<button class="startBtn" @click="$store.commit('updateStartGame', true)">START</button>
+		<button class="greenBtn" @click="$store.commit('updateStartGame', true)">START</button>
 	</div>
 </template>
 
@@ -48,24 +48,6 @@ export default {
 		outline: none;
 		border-radius: 10px;
 		box-sizing: border-box;
-	}
-}
-
-.startBtn {
-	font-size: 22px;
-	font-weight: 600;
-	padding: 10px 30px;
-	outline: none;
-	margin: 0 auto;
-	display: block;
-	background: #1F845A;
-	border: none;
-	border-radius: 10px;
-	cursor: pointer;
-	transition: all .25s ease;
-
-	&:hover {
-		transform: scale(1.1);
 	}
 }
 </style>

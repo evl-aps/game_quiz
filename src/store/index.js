@@ -4,6 +4,7 @@ export default createStore({
 	state: {
 		playerName: '',
 		startGame: false,
+		finishGame: false,
 	},
 	getters: {
 		getPlayerName(state) {
@@ -11,7 +12,10 @@ export default createStore({
 		},
 		getStartGame(state) {
 			return state.startGame
-		}
+		},
+		getFinishGame(state) {
+			return state.finishGame
+		},
 	},
 	mutations: {
 		updatePlayerName(state, name) {
@@ -19,10 +23,9 @@ export default createStore({
 		},
 		updateStartGame(state, value) {
 			state.startGame = value
+		},
+		updateFinishGame(state, value) {
+			state.finishGame = value
 		}
-	},
-	actions: {
-	},
-	modules: {
 	}
 })
