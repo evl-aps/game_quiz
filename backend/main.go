@@ -10,7 +10,7 @@ import (
 type I map[string]interface{}
 
 func main() {
-	migrations.UserInit()
+	migrations.InitDataBase()
 
 	e := echo.New()
 
