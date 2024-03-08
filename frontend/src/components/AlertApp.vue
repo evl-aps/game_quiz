@@ -19,8 +19,8 @@ export default {
 	left: 50%;
 	transform: translateX(-50%);
 	padding: 20px;
-	border-top: 8px solid #ff0000;
-	background: #a70000;
+	border-top: 8px solid #d1001f;
+	background: #f01e2c ;
 	width: 90%;
 	border-radius: 5px;
 }
