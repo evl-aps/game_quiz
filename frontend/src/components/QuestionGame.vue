@@ -1,4 +1,5 @@
 <template>
+<div>
 	<h2>Привет, {{ $store.getters.getPlayerName }}</h2>
 	
 	<div class="questionPlace">
@@ -16,6 +17,7 @@
 			{{ index + 1 == $store.getters.getQuestions.length ? 'FINISH' : 'NEXT'}}
 		</button>
 	</div>
+</div>
 </template>
 
 <script>
