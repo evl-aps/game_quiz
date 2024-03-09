@@ -19,7 +19,7 @@
 			<label for="question">Вопрос</label>
 			<input type="text" id="question" v-model="question">
 
-			<button class="greenBtn">Добавить</button>
+			<button class="greenBtn" @click="addQuestion">Добавить</button>
 		</div>
 	</div>
 
@@ -40,6 +40,7 @@ export default {
 			errors: [],
 			successLogin: false,
 			question: '',
+			questionList: [],
 		}
 	},
 
@@ -48,19 +49,30 @@ export default {
 	},
 
 	methods: {
-		login() {
+		async login() {
 			const formData = new FormData()
 			formData.append('name', this.name)
 			formData.append('password', this.password)
-			this.$http.post('http://localhost:8000/admin', formData)
-			.then( ({ data }) => {
-				if(data.status != 200) {
-					this.errors = [ ...this.errors, data.msg ]
-				} else {
-					sessionStorage.setItem('successLogin', true)
-					this.successLogin = sessionStorage.getItem('successLogin')
-				}
-			})
+			const { data } = await this.$http.post('http://localhost:8000/admin', formData)
+			
+			if(data.status != 200) {
+				this.errors = [ ...this.errors, data.msg ]
+			} else {
+				sessionStorage.setItem('successLogin', true)
+				this.successLogin = sessionStorage.getItem('successLogin')
+			}
+		},
+
+		async addQuestion() {
+			const formData = new FormData()
+			formData.append('question', this.question)
+			const { data } = await this.$http.post('http://localhost:8000/admin/add-question', formData)
+
+			if(data.status != 200) {
+				this.errors = [ ...this.errors, data.msg ]
+			} else {
+				console.log('success');
+			}
 		}
 	}
 }
