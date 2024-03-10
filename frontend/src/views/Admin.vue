@@ -12,15 +12,24 @@
 		<button class="greenBtn" @click="login">Войти как админ</button>
 	</div>
 
-	<div v-else class="adminContent">
-		<div class="adminContentItem">
-			<h2>Добавить вопрос</h2>
+	<div v-else>
+		<div class="adminBtnsSelectTabs">
+			<button
+				:class="{ 'activeTab': addQuestionPage }"
+				@click="addQuestionPage = true, changeQuestionPage = false"
+			>
+				Добавить новые вопросы
+			</button>
 
-			<label for="question">Вопрос</label>
-			<input type="text" id="question" v-model="question">
-
-			<button class="greenBtn" @click="addQuestion">Добавить</button>
+			<button
+				:class="{ 'activeTab': changeQuestionPage }"
+				@click="addQuestionPage = false, changeQuestionPage = true"
+			>
+				Изменить текущие вопросы
+			</button>
 		</div>
+
+		<AddQuestions v-if="addQuestionPage" :addQuestion="addQuestion" />
 	</div>
 
 	<AlertApp v-if="errors.length" :errors="errors"  @click="errors = []"/>
@@ -29,9 +38,10 @@
 
 <script>
 import AlertApp from '../components/AlertApp.vue'
+import AddQuestions from '../components/admin/AddQuestions.vue'
 
 export default {
-	components: { AlertApp },
+	components: { AlertApp, AddQuestions },
 
 	data() {
 		return {
@@ -39,8 +49,9 @@ export default {
 			password: '',
 			errors: [],
 			successLogin: false,
-			question: '',
 			questionList: [],
+			addQuestionPage: false,
+			changeQuestionPage: false,
 		}
 	},
 
@@ -78,20 +89,53 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.adminBtnsSelectTabs,
 .adminContent {
 	display: flex;
-	align-items: center;
+	align-items: baseline;
 	justify-content: space-between;
 	flex-wrap: wrap;
 	width: 90%;
 	margin: 0 auto;
+}
 
-	.adminContentItem {
-		width: 48%;
+.adminContent {
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 2px solid #DEE4EA;
+}
+
+.adminBtnsSelectTabs {
+	button {
+		cursor: pointer;
+		width: 49%;
+		font-weight: 900;
+		background: transparent;
 		border: 1px solid #DEE4EA;
 		border-radius: 5px;
+		outline: none;
+		font-size: 54px;
+		transition: all .35s ease;
 		padding: 15px;
+
+		&:hover {
+			border-color: #1F845A;
+			color: #1F845A;
+		}
 	}
+}
+
+.activeTab {
+	border-color: #1F845A !important;
+	color: #1F845A;
+}
+
+.adminContentItem {
+	width: 49%;
+	border: 1px solid #DEE4EA;
+	border-radius: 5px;
+	padding: 15px;
+	box-sizing: border-box;
 }
 </style>

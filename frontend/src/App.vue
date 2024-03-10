@@ -33,22 +33,23 @@ h2 {
 }
 
 label {
-		font-size: 14px;
-	}
+	font-size: 14px;
+}
 
-	input {
-		display: block;
-		width: 100%;
-		margin: 2px auto 10px auto;
-		font-size: 18px;
-		background: #DEE4EA;
-		color: #161A1D;
-		padding: 10px;
-		border: none;
-		outline: none;
-		border-radius: 5px;
-		box-sizing: border-box;
-	}
+input,
+select {
+	display: block;
+	width: 100%;
+	margin: 2px auto 10px auto;
+	font-size: 18px;
+	background: #DEE4EA;
+	color: #161A1D;
+	padding: 10px;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+	box-sizing: border-box;
+}
 
 .greenBtn {
 	font-size: 22px;

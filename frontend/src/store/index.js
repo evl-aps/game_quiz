@@ -59,7 +59,7 @@ export default createStore({
 					}
 				],
 				correctAnswer: 3,
-				userAnswer: null
+				userAnswer: null,
 			},
 		]
 	},
@@ -75,7 +75,7 @@ export default createStore({
 		},
 		getQuestions(state) {
 			return state.questions
-		}
+		},
 	},
 	mutations: {
 		updatePlayerName(state, name) {
@@ -86,6 +86,6 @@ export default createStore({
 		},
 		updateFinishGame(state, value) {
 			state.finishGame = value
-		}
+		},
 	}
 })
