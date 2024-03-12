@@ -83,8 +83,9 @@ export default {
 			if(data.status != 200) {
 				this.errors = [ ...this.errors, data.msg ]
 			} else {
-				console.log(data);
+				this.$store.commit('updateQuestionsList', data.list)
 			}
+			this.$store.commit('updateQuestion', '')
 		},
 
 		async GetQuestionsList() {
