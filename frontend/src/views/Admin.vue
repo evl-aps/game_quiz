@@ -57,6 +57,7 @@ export default {
 
 	mounted() {
 		this.successLogin = sessionStorage.getItem('successLogin')
+		this.GetQuestionsList()
 	},
 
 	methods: {
@@ -76,14 +77,19 @@ export default {
 
 		async addQuestion() {
 			const formData = new FormData()
-			formData.append('question', this.question)
+			formData.append('question', this.$store.getters.getQuestion)
 			const { data } = await this.$http.post('http://localhost:8000/admin/add-question', formData)
 
 			if(data.status != 200) {
 				this.errors = [ ...this.errors, data.msg ]
 			} else {
-				console.log('success');
+				console.log(data);
 			}
+		},
+
+		async GetQuestionsList() {
+			const { data } = await this.$http.get('http://localhost:8000/get-question')
+			this.$store.commit('updateQuestionsList', data.list)
 		}
 	}
 }

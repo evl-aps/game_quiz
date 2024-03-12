@@ -43,7 +43,7 @@ export default {
 		},
 
 		clickToAnswer(answer, index) {
-			this.$store.getters.getQuestions.forEach( question => {
+			this.$store.getters.getQuestionsList.forEach( question => {
 				question.answers.forEach( el => {
 					if(el.id == this.parseProxy(answer).id) {
 						el.choisen = true

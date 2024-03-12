@@ -4,7 +4,7 @@
 		<h2>Добавить вопрос</h2>
 
 		<label for="question">Вопрос</label>
-		<input type="text" id="question">
+		<input type="text" id="question" v-model="computedQuestion">
 
 		<button class="greenBtn" @click="addQuestion">Добавить вопрос</button>
 	</div>
@@ -15,9 +15,13 @@
 		<label for="quest">Выбрать вопрос</label>
 		<select id="quest">
 			<option value="" selected disabled hidden></option>
-			<option value="1">test</option>
-			<option value="2">test 2</option>
-			<option value="3">test 3</option>
+			<option 
+				v-for="question in $store.getters.getQuestionsList" 
+				:key="question.ID"
+				:value="question.ID"
+			>
+				{{ question.Question }}
+			</option>
 		</select>
 
 		<label for="">Ответ 1</label>
@@ -43,5 +47,17 @@ export default {
 		question: String,
 		addQuestion: Function,
 	},
+
+	computed: {
+		computedQuestion: {
+			get() {
+				return this.$store.getters.getQuestion
+			},
+			set(value) {
+				this.$store.commit('updateQuestion', value)
+				// return this.$store.getQuestion()
+			}
+		}
+	}
 }
 </script>

@@ -16,6 +16,7 @@ func main() {
 
 	e.POST("/admin", handlers.LoginAdmin())
 	e.POST("/admin/add-question", handlers.AddQuestion())
+	e.GET("/get-question", handlers.GetQuestionsList())
 
 	e.Logger.Fatal(e.Start(":8000"))
 }
