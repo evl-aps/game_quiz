@@ -1,9 +1,9 @@
 <template>
 	<div class="input">
-		<label for="name">Имя участника</label>
+		<label for="name">Придумайте ник</label>
 		<input type="text" id="name" v-model="computedName" @keypress.enter="startGame">
 
-		<button class="greenBtn" @click="startGame">START</button>
+		<button class="greenBtn" @click="startGame">СТАРТ</button>
 	</div>
 </template>
 

@@ -14,6 +14,8 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.CORS())
 
+	e.POST("/start-game", handlers.StartGame())
+
 	e.POST("/admin", handlers.LoginAdmin())
 	e.POST("/admin/add-question", handlers.AddQuestion())
 	e.GET("/get-question", handlers.GetQuestionsList())

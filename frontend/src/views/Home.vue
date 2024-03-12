@@ -33,9 +33,12 @@ export default {
 	},
 
 	methods: {
-		startGame() {
-			if(!this.$store.getters.getPlayerName) {
-				this.updateErrors('Введите ваше имя!')
+		async startGame() {
+			const formData = new FormData()
+			formData.append('name', this.$store.getters.getPlayerName)
+			const { data } = await this.$http.post('http://localhost:8000/start-game', formData)
+			if(data.status != 200) {
+				this.errors = [...this.errors, data.msg]
 				return
 			}
 			this.errors = []
@@ -47,7 +50,7 @@ export default {
 				question.answers.forEach( el => {
 					if(el.id == this.parseProxy(answer).id) {
 						el.choisen = true
-						this.$store.getters.getQuestions[index].userAnswer = el.value
+						this.$store.getters.getQuestionsList[index].userAnswer = el.value
 					} else {
 						el.choisen = false
 					}
@@ -56,13 +59,13 @@ export default {
 		},
 
 		nextQuestion() {
-			if(!this.$store.getters.getQuestions[this.index].userAnswer) {
+			if(!this.$store.getters.getQuestionsList[this.index].userAnswer) {
 				this.updateErrors('Необходимо выбрать ответ!')
 				return
 			}
 			this.errors = []
 			this.updateAnswersToFalse();
-			if(this.index + 1 != this.$store.getters.getQuestions.length) {
+			if(this.index + 1 != this.$store.getters.getQuestionsList.length) {
 				this.index++
 			} else {
 				this.$store.commit('updateFinishGame', true)
@@ -74,7 +77,7 @@ export default {
 		},
 
 		updateAnswersToFalse() {
-			this.$store.getters.getQuestions.forEach( question => {
+			this.$store.getters.getQuestionsList.forEach( question => {
 				question.answers.forEach( el => {
 					el.choisen = false
 				})

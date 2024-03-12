@@ -23,8 +23,7 @@ func InitDataBase() {
 func migrateUsersTable(db *sql.DB) {
 	sql := `CREATE TABLE IF NOT EXISTS users
 			(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-			name VARCHAR NOT NULL,
-			result INTEGER);`
+			name VARCHAR NOT NULL);`
 	_, err := db.Exec(sql)
 	if err != nil {
 		panic(err)

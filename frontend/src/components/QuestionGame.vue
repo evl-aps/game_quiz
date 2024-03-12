@@ -2,11 +2,11 @@
 <div>
 	<h2>Привет, {{ $store.getters.getPlayerName }}</h2>
 	
-	<div class="questionPlace">
+	<div class="questionPlace" v-if="$store.getters.getQuestionsList.length">
 		<h3>Вопрос № {{ index + 1 }}</h3>
-		<p>{{ $store.getters.getQuestions[index].question }}</p>
+		<p>{{ $store.getters.getQuestionsList[index].question }}</p>
 
-		<div class="radio" v-for="answer in $store.getters.getQuestions[index].answers" :key="answer.id">
+		<div class="radio" v-for="answer in $store.getters.getQuestionsList[index].answers" :key="answer.id">
 			<div class="answer" @click="clickToAnswer(answer, index)">
 				<div class="circle"><div :class="{ 'choisen': answer.choisen }"></div></div>
 				<span>{{ answer.text }}</span>
@@ -14,9 +14,11 @@
 		</div>
 
 		<button class="greenBtn" @click="nextQuestion">
-			{{ index + 1 == $store.getters.getQuestions.length ? 'FINISH' : 'NEXT'}}
+			{{ index + 1 == $store.getters.getQuestionsList.length ? 'FINISH' : 'NEXT'}}
 		</button>
 	</div>
+
+	<div class="emptyQuestionsMsg" v-else><p>Ooooooops!</p> Кажется вопросы еще не добавили. Зайдите позже</div>
 </div>
 </template>
 
@@ -96,5 +98,12 @@ export default {
 		margin-right: 0;
 		margin-left: auto;
 	}
+}
+
+.emptyQuestionsMsg {
+	font-size: 24px;
+	font-weight: 900;
+	text-align: center;
+	margin-top: 20px;
 }
 </style>

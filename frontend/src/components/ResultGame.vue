@@ -1,11 +1,13 @@
 <template>
+<div>
 	<h2>Ваши результаты, {{ $store.getters.getPlayerName }}</h2>
 
 	<div class="resultPlace">
-		10/{{ $store.getters.getQuestions.length }}
+		10/{{ $store.getters.getQuestionsList.length }}
 	</div>
 
 	<button class="greenBtn" @click="reloadPage">Repeat</button>
+</div>
 </template>
 
 <script>
