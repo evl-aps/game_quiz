@@ -15,10 +15,10 @@ func main() {
 	e.Use(middleware.CORS())
 
 	e.POST("/start-game", handlers.StartGame())
+	e.GET("/get-questions-list", handlers.GetQuestionsList())
 
 	e.POST("/admin", handlers.LoginAdmin())
 	e.POST("/admin/add-question", handlers.AddQuestion())
-	e.GET("/get-question", handlers.GetQuestionsList())
 
 	e.Logger.Fatal(e.Start(":8000"))
 }

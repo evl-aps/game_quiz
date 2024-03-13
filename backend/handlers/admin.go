@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"encoding/json"
+	"gameQuiz/helpers"
 	"gameQuiz/models"
 	"net/http"
 
@@ -8,6 +10,10 @@ import (
 )
 
 type I map[string]interface{}
+
+type Answers struct {
+	Answers []string
+}
 
 func LoginAdmin() echo.HandlerFunc {
 	return func(c echo.Context) error {
@@ -39,9 +45,7 @@ func AddQuestion() echo.HandlerFunc {
 		}
 
 		idQuestion, err := models.AddQuestion(question)
-		if err != nil {
-			panic(err)
-		}
+		helpers.PanicHelper(err)
 
 		list := models.GetQuestionsList().List
 
@@ -53,11 +57,11 @@ func AddQuestion() echo.HandlerFunc {
 	}
 }
 
-func GetQuestionsList() echo.HandlerFunc {
+func addAnswers() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		return c.JSON(http.StatusOK, I{
-			"status": 200,
-			"list":   models.GetQuestionsList().List,
-		})
+		answers := Answers{}
+		err := json.Unmarshal([]byte(c.FormValue("answers")), &answers)
+		helpers.PanicHelper(err)
+		return c.JSON(http.StatusOK, I{})
 	}
 }

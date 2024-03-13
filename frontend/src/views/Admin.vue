@@ -89,7 +89,7 @@ export default {
 		},
 
 		async GetQuestionsList() {
-			const { data } = await this.$http.get('http://localhost:8000/get-question')
+			const { data } = await this.$http.get('http://localhost:8000/get-questions-list')
 			this.$store.commit('updateQuestionsList', data.list)
 		}
 	}

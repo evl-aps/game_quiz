@@ -2,15 +2,14 @@ package migration
 
 import (
 	"database/sql"
+	"gameQuiz/helpers"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
 func InitDataBase() {
 	db, err := sql.Open("sqlite3", "storage.db")
-	if err != nil {
-		panic(err)
-	}
+	helpers.PanicHelper(err)
 	if db == nil {
 		panic("db is nil")
 	}
@@ -25,9 +24,7 @@ func migrateUsersTable(db *sql.DB) {
 			(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 			name VARCHAR NOT NULL);`
 	_, err := db.Exec(sql)
-	if err != nil {
-		panic(err)
-	}
+	helpers.PanicHelper(err)
 }
 
 func migrateQuestionTable(db *sql.DB) {
@@ -35,9 +32,7 @@ func migrateQuestionTable(db *sql.DB) {
 			(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 			question VARCHAR NOT NULL)`
 	_, err := db.Exec(sql)
-	if err != nil {
-		panic(err)
-	}
+	helpers.PanicHelper(err)
 }
 
 func migrateAnswerTable(db *sql.DB) {
@@ -46,7 +41,5 @@ func migrateAnswerTable(db *sql.DB) {
 			id_question INTEGER NOT NULL,
 			answer_text VARCHAR NOT NULL)`
 	_, err := db.Exec(sql)
-	if err != nil {
-		panic(err)
-	}
+	helpers.PanicHelper(err)
 }

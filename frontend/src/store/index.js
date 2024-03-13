@@ -37,7 +37,6 @@ export default createStore({
 		},
 		updateQuestion(state, value) {
 			state.question = value
-			console.log(state.question)
 		},
 		updateQuestionsList(state, questionsList) {
 			state.questionsList = questionsList

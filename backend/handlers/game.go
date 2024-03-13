@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"gameQuiz/helpers"
 	"gameQuiz/models"
 	"net/http"
 
@@ -30,9 +31,7 @@ func StartGame() echo.HandlerFunc {
 		}
 
 		userID, err := models.StartGame(name)
-		if err != nil {
-			panic(err)
-		}
+		helpers.PanicHelper(err)
 
 		return c.JSON(http.StatusOK, G{
 			"status": 200,
